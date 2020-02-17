@@ -1,16 +1,24 @@
 import React from 'react';
 
-let is_active = false;
-
-class Ghost extends React.Component {
+class GhostComponent extends React.Component {
 	constructor() {
 		super();
+	}
+
+	remove(){
+		this.props.removeItem( this );
 	}
 
 	render() {
 		return (
 			<div className="video">
-				<YouTubeVideo id={this.props.id}/>
+				<div className="controls">
+					<button onClick={this.remove.bind(this)}>Remove</button>
+				</div>
+				<div className="video-frame">
+					<YouTubeVideo id={this.props.id}/>
+				</div>
+
 				<div className='overlay'>
 					<p className='title'>{this.props.title}</p>
 					<p className='artist'>{this.props.artist}</p>
@@ -23,18 +31,6 @@ class Ghost extends React.Component {
 
 class YouTubeVideo extends React.Component {
 	constructor() {
-
-		if(! is_active){
-			console.log('Activate Youtube');
-			is_active = true;
-
-			// Inject YouTube API script
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/player_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		}
-
 		super();
 		
 		// youtube options and serialization
@@ -58,6 +54,8 @@ class YouTubeVideo extends React.Component {
 			height	: 270,
 			src 	: `https://www.youtube.com/embed/${arguments[0].id}?${opts}`
 		};
+	}
+	controls(){
 /*
 		// https://developers.google.com/youtube/iframe_api_reference
 
@@ -103,4 +101,4 @@ class YouTubeVideo extends React.Component {
 
 }
 
-export default Ghost;
+export default GhostComponent;
