@@ -12,6 +12,7 @@ html { font-family: 'Inter', sans-serif; }
 	--secondary: #3ae06e;
 	--error: #d32f2f;
 	--warning: #ffd655;
+	--padding:0.5rem;
 }
 :root {
 	--text: var(--white);
@@ -48,6 +49,18 @@ body{
 	align-items: center;
 }
 .ghost-app{
+}
+
+select,
+button{
+	border-radius:4px;
+	padding:var(--padding);
+	margin:0;
+	margin-left:0.5rem;
+	color:var(--white);
+	background:var(--primary);
+	border:0;
+	height:2rem;
 }
 
 
@@ -98,4 +111,6 @@ body{
 	position: absolute;
 	top:0;
 	right:0;
+	right:0;
+	padding:var(--padding);
 }

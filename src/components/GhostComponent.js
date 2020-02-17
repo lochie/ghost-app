@@ -1,24 +1,76 @@
 import React from 'react';
+import YouTube from 'react-youtube';
+
+const options = {
+	width			: 480,
+	height			: 270,
+	playerVars	: {	// https://developers.google.com/youtube/player_parameters
+		enablejsapi 	: 1,
+		html5 			: '1js',
+		autoplay 		: 0,
+		controls 		: 0,
+		disablekb 		: 1,
+		fs 				: 0,
+		loop 			: 1,
+		modestbranding	: 1,
+		rel				: 0,
+		showinfo		: 0,
+		color			: 'white',
+	}
+};
 
 class GhostComponent extends React.Component {
 	constructor() {
 		super();
+		this.state = {
+			player : null,
+			player_state : null,
+		};
 	}
 
 	remove(){
-		this.props.removeItem( this );
+		this.props.removeItem( this.props.index );
+	}
+	
+	toggle(event) {
+		if( this.state.player.getPlayerState() == 1 ){
+			this.state.player.pauseVideo();
+		}else{
+			this.state.player.playVideo();
+		}
+	}
+	
+	onReady(event) {
+		this.setState({
+			player : event.target
+		})
+		this.state.player.pauseVideo();
 	}
 
 	render() {
 		return (
 			<div className="video">
 				<div className="controls">
+					<button className="play-button" onClick={this.toggle.bind(this)}>Play/Pause</button>
 					<button onClick={this.remove.bind(this)}>Remove</button>
 				</div>
 				<div className="video-frame">
-					<YouTubeVideo id={this.props.id}/>
+					<YouTube
+						videoId={this.props.id}
+						className='iframe'
+						containerClassName='iframe-container'
+						opts={options}
+						onReady={this.onReady.bind(this)}
+						//onReady={func}                    // defaults -> noop
+						//onPlay={func}                     // defaults -> noop
+						//onPause={func}                    // defaults -> noop
+						//onEnd={func}                      // defaults -> noop
+						//onError={func}                    // defaults -> noop
+						//onStateChange={func}                    // defaults -> noop
+						//onPlaybackRateChange={func}       // defaults -> noop
+						//onPlaybackQualityChange={func}    // defaults -> noop
+					/>
 				</div>
-
 				<div className='overlay'>
 					<p className='title'>{this.props.title}</p>
 					<p className='artist'>{this.props.artist}</p>
@@ -28,77 +80,4 @@ class GhostComponent extends React.Component {
 	}
 
 }
-
-class YouTubeVideo extends React.Component {
-	constructor() {
-		super();
-		
-		// youtube options and serialization
-		const options = {
-			enablejsapi 	: 1,
-			html5 			: '1js',
-			autoplay 		: 0,
-			controls 		: 0,
-			disablekb 		: 1,
-			fs 				: 0,
-			loop 			: 1,
-			modestbranding	: 1,
-			rel				: 0,
-			showinfo		: 0,
-			color			: 'white'
-		};
-		let opts = Object.entries(options).map(([key, val]) => `${key}=${val}`).join('&');
-
-		this.state = {
-			width	: 480,
-			height	: 270,
-			src 	: `https://www.youtube.com/embed/${arguments[0].id}?${opts}`
-		};
-	}
-	controls(){
-/*
-		// https://developers.google.com/youtube/iframe_api_reference
-
-		// global variable for the player
-		let player;
-
-		// this function gets called when API is ready to use
-		function onYouTubePlayerAPIReady() {
-			// create the global player from the specific iframe (#video)
-			player = new YT.Player('video', {
-				events: {
-					// call this function when player is ready to use
-							'onReady' : onPlayerReady
-				}
-			});
-		}
-
-		function onPlayerReady(event) {
-			
-			// bind events
-			let playButton = document.getElementById("play-button");
-			playButton.addEventListener("click", function() {
-				player.playVideo();
-			});
-			
-			let pauseButton = document.getElementById("pause-button");
-			pauseButton.addEventListener("click", function() {
-				player.pauseVideo();
-			});
-			
-		}
-*/
-	}
-	render(){
-		return (
-			<div className="youtube">
-				<div className="play-button"></div>
-				<div className="pauseButton-button"></div>
-				<iframe src={this.state.src} width={this.state.width} height={this.state.height}></iframe>
-			</div>
-		);
-	}
-
-}
-
 export default GhostComponent;

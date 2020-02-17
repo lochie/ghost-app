@@ -21,16 +21,6 @@ class Ghost extends React.Component {
 				artist 	: data[i].artist,
 			});
 		}
-		
-		this.initYouTubeAPI();
-	}
-
-	// YouTube API
-	initYouTubeAPI(){
-		var tag = document.createElement('script');
-		tag.src = "https://www.youtube.com/player_api";
-		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	}
 
 	handleAddItem(id){
@@ -43,13 +33,12 @@ class Ghost extends React.Component {
 		})
 	}
 
-	// TODO
-	handleRemoveItem(item){
+	handleRemoveItem(index){
 		/*
-		console.log(item);
-		console.log(this.state.videos);
+		console.log('remove item',index)
+		let videos = this.state.videos.splice(index,1);
 		this.setState({
-			videos: this.state.videos
+			videos: videos
 		})
 		*/
 	}
@@ -60,6 +49,7 @@ class Ghost extends React.Component {
 				{this.state.videos.map((video, index) => 
 					<GhostComponent
 						key={index}
+						index={index}
 						id={video.id}
 						title={video.title}
 						artist={video.artist}
