@@ -4,57 +4,98 @@ html { font-family: 'Inter', sans-serif; }
   html { font-family: 'Inter var', sans-serif; }
 }
 
+:root {
+	--black: #242424;
+	--white: white;
+	--muted: #6c6f93;
+	--primary: #6539eb;
+	--secondary: #3ae06e;
+	--error: #d32f2f;
+	--warning: #ffd655;
+}
+:root {
+	--text: var(--white);
+	--background: var(--primary);
+}
+*, *::before, *::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+iframe{
+	display:block;
+	margin:0;
+	border:0;
+}
 body{
-    border:0;
-    margin:0;
-    padding:0;
-    overflow: hidden;
-    min-height: 100vh;
-    background: #242424;
-    font-family:"Inter";
-    color:white;
+	border:0;
+	margin:0;
+	padding:0;
+	overflow: hidden;
+	min-height: 100vh;
+	background: var(--background);
+	color: var(--text);
+	font-family:"Inter";
 }
 .App{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.ghost-app{
 }
 
-iframe{
-    display:block;
-    margin:0;
-    border:0;
-}
 
+.video, .add-video{
+	position: relative;
+	display:inline-flex;
+	justify-content: center;
+	align-items: center;
+	vertical-align: top;
+	width:480px;
+	margin:2rem;
+	border-radius:0.4rem;
+	overflow: hidden;
+	box-shadow:
+		0 2.1px 3.9px -16px rgba(0, 0, 0, 0.061),
+		0 7.1px 13.2px -16px rgba(0, 0, 0, 0.089),
+		0 32px 59px -16px rgba(0, 0, 0, 0.15);
+}
+.add-video{
+	padding:7.75rem 0; 
+	background:rgba(0,0,0,0.1);
+	border:1px dashed rgba(255,255,255,.2);
+}
 .video{
-    position: relative;
-    display:inline-block;
-    background:rgba(0,0,0,0.1);
-    border:1px solid rgba(0,0,0,0.1);
-    border-radius:0.4rem;
-    overflow: hidden;
-    box-shadow:
-        0 2.1px 3.9px -16px rgba(0, 0, 0, 0.061),
-        0 7.1px 13.2px -16px rgba(0, 0, 0, 0.089),
-        0 32px 59px -16px rgba(0, 0, 0, 0.15);
+	background:rgba(0,0,0,0.1);
+	border:1px solid rgba(0,0,0,0.1);
 }
 .video .overlay{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    padding:0.5rem 1rem;
-    background:rgba(0,0,0,0.7);
-    text-align: center;
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	padding:0.5rem 1rem;
+	background:rgba(0,0,0,0.7);
+	text-align: center;
 }
 .video .overlay .title{
-    font-size:1.0rem;
-    margin:0 auto;
+	font-size:1.0rem;
+	margin:0 auto;
+	color: var(--white);
 }
 .video .overlay .artist{
-    opacity: 0.6;
-    font-size:0.9rem;
-    margin:0 auto;
+	font-size:0.9rem;
+	margin:0 auto;
+	color: var(--muted);
+}
+.video .controls{
+	position: absolute;
+	top:0;
+	right:0;
 }
