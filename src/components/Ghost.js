@@ -33,30 +33,31 @@ class Ghost extends React.Component {
 		})
 	}
 
-	handleRemoveItem(index){
-		/*
-		console.log('remove item',index)
-		let videos = this.state.videos.splice(index,1);
+	handleClearItems(index){
 		this.setState({
-			videos: videos
+			videos: []
 		})
-		*/
 	}
 
 	render(){
 		return (
 			<div className="ghost-app">
-				{this.state.videos.map((video, index) => 
-					<GhostComponent
-						key={index}
-						index={index}
-						id={video.id}
-						title={video.title}
-						artist={video.artist}
-						removeItem={this.handleRemoveItem.bind(this)}
-					/>
-				)}
-				<GhostAddComponent data={data} addItem={this.handleAddItem.bind(this)} />
+				<GhostAddComponent
+					data={data}
+					addItem={this.handleAddItem.bind(this)}
+					clearItems={this.handleClearItems.bind(this)}
+				/>
+				<div id="ghost-videos">
+					{this.state.videos.map((video, index) => 
+						<GhostComponent
+							key={index}
+							index={index}
+							id={video.id}
+							title={video.title}
+							artist={video.artist}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	}

@@ -15,9 +15,12 @@ class GhostAddComponent extends React.Component {
 		e.target.value = '';
 	}
  
-	handleClick (e) {
+	addClick (e) {
 		const value = Math.floor(Math.random()*this.props.data.length);
 		this.addItem( value );
+	}
+	clearClick (e) {
+		this.props.clearItems();
 	}
 
 	render() {
@@ -27,7 +30,8 @@ class GhostAddComponent extends React.Component {
 					<option value="">Pick a Ghost</option>
 					{this.props.data.map((item, index) => <option key={index} value={index}>{item.title} by {item.artist}</option>)}
 				</select>
-				<button onClick={this.handleClick.bind(this)}>Random</button>
+				<button onClick={this.addClick.bind(this)}>Random</button>
+				<button onClick={this.clearClick.bind(this)}>Clear</button>
 			</div>
 		);
 	}

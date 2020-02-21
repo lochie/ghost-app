@@ -1,5 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import Draggable from 'react-draggable-elements';
 
 const options = {
 	width			: 480,
@@ -23,20 +24,51 @@ class GhostComponent extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			player : null,
-			player_state : null,
+			show 			: true,
+			class 			: '',
+			player 			: null,
+			player_state 	: null,
+			volume 			: 100
 		};
 	}
 
+	randomCoordinate(){
+		return {
+			x : Math.random()*window.innerWidth,
+			y : Math.random()*window.innerHeight
+		}
+	}
+
 	remove(){
-		this.props.removeItem( this.props.index );
+		this.setState({
+			class : 'hide'
+		})
+		setTimeout(this.hide.bind(this), 1000);
+	}
+
+	hide(){
+		this.setState({
+			show : false
+		})
+	}
+	play(){
+		this.state.player.playVideo();
+	}
+	pause(){
+		this.state.player.pauseVideo();
+	}
+	setVolume( value ){
+		this.setState({
+			volume : value
+		})
+		this.state.player.setVolume( this.state.volume );
 	}
 	
 	toggle(event) {
-		if( this.state.player.getPlayerState() == 1 ){
-			this.state.player.pauseVideo();
+		if( this.state.player.getPlayerState() === 1 ){
+			this.pause();
 		}else{
-			this.state.player.playVideo();
+			this.play();
 		}
 	}
 	
@@ -44,38 +76,46 @@ class GhostComponent extends React.Component {
 		this.setState({
 			player : event.target
 		})
-		this.state.player.pauseVideo();
+		if( this.state.player ) this.state.player.pauseVideo();
 	}
 
 	render() {
+		if(! this.state.show) return null;
 		return (
-			<div className="video">
-				<div className="controls">
-					<button className="play-button" onClick={this.toggle.bind(this)}>Play/Pause</button>
-					<button onClick={this.remove.bind(this)}>Remove</button>
-				</div>
-				<div className="video-frame">
-					<YouTube
-						videoId={this.props.id}
-						className='iframe'
-						containerClassName='iframe-container'
-						opts={options}
-						onReady={this.onReady.bind(this)}
-						//onReady={func}                    // defaults -> noop
-						//onPlay={func}                     // defaults -> noop
-						//onPause={func}                    // defaults -> noop
-						//onEnd={func}                      // defaults -> noop
-						//onError={func}                    // defaults -> noop
-						//onStateChange={func}                    // defaults -> noop
-						//onPlaybackRateChange={func}       // defaults -> noop
-						//onPlaybackQualityChange={func}    // defaults -> noop
-					/>
-				</div>
-				<div className='overlay'>
-					<p className='title'>{this.props.title}</p>
-					<p className='artist'>{this.props.artist}</p>
-				</div>
-			</div>
+	      <Draggable
+	        handle=".handle"
+	        defaultPosition={this.randomCoordinate()}>
+	        	<div class="ghost-container">
+					<div className={ "video "+this.state.class }>
+		          		<div className="handle"></div>
+						<div className="controls">
+							<button className="play-button" onClick={this.toggle.bind(this)}>Play/Pause</button>
+							<button onClick={this.remove.bind(this)}>Remove</button>
+						</div>
+						<div className="video-frame">
+							<YouTube
+								videoId={this.props.id}
+								className='iframe'
+								containerClassName='iframe-container'
+								opts={options}
+								onReady={this.onReady.bind(this)}
+								//onReady={func}                    // defaults -> noop
+								//onPlay={func}                     // defaults -> noop
+								//onPause={func}                    // defaults -> noop
+								//onEnd={func}                      // defaults -> noop
+								//onError={func}                    // defaults -> noop
+								//onStateChange={func}                    // defaults -> noop
+								//onPlaybackRateChange={func}       // defaults -> noop
+								//onPlaybackQualityChange={func}    // defaults -> noop
+							/>
+						</div>
+						<div className='overlay'>
+							<p className='title'>{this.props.title}</p>
+							<p className='artist'>{this.props.artist}</p>
+						</div>
+					</div>
+	        	</div>
+			</Draggable>
 		);
 	}
 
