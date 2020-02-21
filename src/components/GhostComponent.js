@@ -3,8 +3,8 @@ import YouTube from 'react-youtube';
 import Draggable from 'react-draggable-elements';
 
 const options = {
-	width			: 480,
-	height			: 270,
+	width			: 320,
+	height			: 180,
 	playerVars	: {	// https://developers.google.com/youtube/player_parameters
 		enablejsapi 	: 1,
 		html5 			: '1js',

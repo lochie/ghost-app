@@ -1,0 +1,169 @@
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+	html { font-family: 'Inter var', sans-serif; }
+}
+
+:root {
+	--black: #242424;
+	--white: white;
+	--muted: #6c6f93;
+	--primary: #6539eb;
+	--secondary: #3ae06e;
+	--error: #d32f2f;
+	--warning: #ffd655;
+	--padding:0.5rem;
+}
+:root {
+	--text: var(--white);
+	--background: var(--primary);
+}
+*, *::before, *::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+iframe{
+	display:block;
+	margin:0;
+	border:0;
+}
+body{
+	border:0;
+	margin:0;
+	padding:0;
+	overflow: hidden;
+	min-height: 100vh;
+	background: var(--background);
+	color: var(--text);
+	font-family:"Inter";
+}
+.App{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+.ghost-app{
+}
+
+select,
+button{
+	border-radius:4px;
+	padding:var(--padding);
+	margin:0;
+	margin-left:0.5rem;
+	color:var(--white);
+	background:var(--primary);
+	border:0;
+	height:2rem;
+}
+
+
+.add-video{
+	z-index:2;
+	position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	padding:0.5rem 1rem;
+	text-align: center;
+	background:rgba(0,0,0,0.1);
+	border:1px dashed rgba(255,255,255,.2);
+}
+#ghost-videos{
+	z-index: 1;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	overflow: hidden;
+}
+button{
+	transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+	&:hover{	transition-duration:0.2s; transform:scale(1.02); }
+	&:active{	transition-duration:0.1s; transform:scale(0.99); }
+}
+.video{
+	position: absolute;
+	left:0;
+	top:0;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	vertical-align: top;
+	width:320px;
+	max-width:90%;
+	margin:2rem;
+	border-radius:0.4rem;
+	overflow: hidden;
+	box-shadow:
+		0 2.1px 3.9px -16px rgba(0, 0, 0, 0.061),
+		0 7.1px 13.2px -16px rgba(0, 0, 0, 0.089),
+		0 32px 59px -16px rgba(0, 0, 0, 0.15);
+	background:rgba(0,0,0,0.1);
+	border:1px solid rgba(0,0,0,0.1);
+}
+.video.hide{
+	transition: all 0.4s ease-in;
+	transform:scale(0.99);
+	opacity: 0;
+}
+.video .handle{
+	position:absolute;
+	left:0;
+	top:0;
+	width:3rem;
+	height:3rem;
+	background:var(--background);
+	text-align: center;
+	cursor: move;
+	border-radius:1rem;
+}
+.video .handle:hover{
+	background:var(--secondary);
+}
+.video .handle:before {
+    content: '.';
+    position: absolute;
+    left: 14px;
+    font-size: 20px;
+    line-height: 20px;
+    color: var(--white);
+    text-shadow:	0 5px currentColor,
+					0 10px currentColor,
+					5px 0 currentColor,
+					5px 5px currentColor,
+					5px 10px currentColor,
+					10px 0 currentColor,
+					10px 5px currentColor,
+					10px 10px currentColor;
+}
+.video .overlay{
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	padding:0.5rem 1rem;
+	background:rgba(0,0,0,0.7);
+	text-align: center;
+}
+.video .overlay .title{
+	font-size:1.0rem;
+	margin:0 auto;
+	color: var(--white);
+}
+.video .overlay .artist{
+	font-size:0.9rem;
+	margin:0 auto;
+	color: var(--muted);
+}
+.video .controls{
+	position: absolute;
+	top:0;
+	right:0;
+	right:0;
+	padding:var(--padding);
+}
