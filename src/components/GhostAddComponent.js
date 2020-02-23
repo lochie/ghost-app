@@ -3,6 +3,9 @@ import React from 'react';
 class GhostAddComponent extends React.Component {
 	constructor() {
 		super();
+		this.state = {
+			
+		}
 	}
 
 	addItem( id ){

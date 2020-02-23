@@ -27,6 +27,11 @@ iframe{
 	display:block;
 	margin:0;
 	border:0;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
 }
 body{
 	border:0;
@@ -94,9 +99,8 @@ button{
 	justify-content: center;
 	align-items: center;
 	vertical-align: top;
-	width:320px;
-	max-width:90%;
-	margin:2rem;
+	width:100%;
+	height: 100%;
 	border-radius:0.4rem;
 	overflow: hidden;
 	box-shadow:
@@ -111,35 +115,43 @@ button{
 	transform:scale(0.99);
 	opacity: 0;
 }
-.video .handle{
+.handle{
+	z-index: 9;
 	position:absolute;
-	left:0;
-	top:0;
 	width:3rem;
 	height:3rem;
-	background:var(--background);
 	text-align: center;
-	cursor: move;
-	border-radius:1rem;
+	&.drag-handle{
+		cursor: move;
+		left:0;
+		top:0;
+		color: var(--white);
+		&:hover{
+			color:var(--secondary);
+		}
+		&:before {
+		    content: '.';
+		    position: absolute;
+		    left: 14px;
+		    font-size: 20px;
+		    line-height: 20px;
+		    text-shadow:	0 5px currentColor,
+							0 10px currentColor,
+							5px 0 currentColor,
+							5px 5px currentColor,
+							5px 10px currentColor,
+							10px 0 currentColor,
+							10px 5px currentColor,
+							10px 10px currentColor;
+		}
+	}
 }
-.video .handle:hover{
-	background:var(--secondary);
-}
-.video .handle:before {
-    content: '.';
-    position: absolute;
-    left: 14px;
-    font-size: 20px;
-    line-height: 20px;
-    color: var(--white);
-    text-shadow:	0 5px currentColor,
-					0 10px currentColor,
-					5px 0 currentColor,
-					5px 5px currentColor,
-					5px 10px currentColor,
-					10px 0 currentColor,
-					10px 5px currentColor,
-					10px 10px currentColor;
+.video .video-frame{
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
 }
 .video .overlay{
 	position:absolute;
@@ -166,4 +178,90 @@ button{
 	right:0;
 	right:0;
 	padding:var(--padding);
+}
+
+.video{
+	.video-frame{ 	z-index: 1; }
+	.overlay{ 		z-index: 2; }
+	.controls{ 		z-index: 3; }
+	.handle{		z-index: 4; }
+}
+
+
+.react-resizable {
+	position: relative;
+}
+.react-resizable-handle {
+	z-index: 9;
+	position: absolute;
+	width: 2rem;
+	height: 2rem;
+	color: var(--white);
+	&:hover{
+		color:var(--secondary);
+	}
+	&:before {
+	    content: '.';
+	    position: absolute;
+	    right: 0;
+	    bottom:0;
+	    font-size: 20px;
+	    line-height: 20px;
+	    text-shadow:	0 -5px currentColor,
+						0 -10px currentColor,
+						-5px 0 currentColor,
+						-5px -5px currentColor,
+						-10px 0 currentColor;
+	}
+}
+.react-resizable-handle-sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: rotate(90deg);
+}
+.react-resizable-handle-se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+.react-resizable-handle-nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: rotate(180deg);
+}
+.react-resizable-handle-ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: rotate(270deg);
+}
+.react-resizable-handle-w,
+.react-resizable-handle-e {
+  top: 50%;
+  margin-top: -10px;
+  cursor: ew-resize;
+}
+.react-resizable-handle-w {
+  left: 0;
+  transform: rotate(135deg);
+}
+.react-resizable-handle-e {
+  right: 0;
+  transform: rotate(315deg);
+}
+.react-resizable-handle-n,
+.react-resizable-handle-s {
+  left: 50%;
+  margin-left: -10px;
+  cursor: ns-resize;
+}
+.react-resizable-handle-n {
+  top: 0;
+  transform: rotate(225deg);
+}
+.react-resizable-handle-s {
+  bottom: 0;
+  transform: rotate(45deg);
 }

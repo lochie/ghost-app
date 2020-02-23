@@ -1,6 +1,9 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+
 import Draggable from 'react-draggable-elements';
+
+import { Resizable, ResizableBox } from 'react-resizable';
 
 const options = {
 	width			: 320,
@@ -82,39 +85,43 @@ class GhostComponent extends React.Component {
 	render() {
 		if(! this.state.show) return null;
 		return (
-	      <Draggable
-	        handle=".handle"
-	        defaultPosition={this.randomCoordinate()}>
-	        	<div class="ghost-container">
-					<div className={ "video "+this.state.class }>
-		          		<div className="handle"></div>
-						<div className="controls">
-							<button className="play-button" onClick={this.toggle.bind(this)}>Play/Pause</button>
-							<button onClick={this.remove.bind(this)}>Remove</button>
-						</div>
-						<div className="video-frame">
+			<Draggable handle=".drag-handle" defaultPosition={this.randomCoordinate()}>
+				<div class="ghost-container">
+					<ResizableBox
+					width={320}
+					height={180}
+					minConstraints={[240,135]}
+					maxConstraints={[640,360]}
+					lockAspectRatio={true}
+					>
+						<div className={ "video "+this.state.class }>
+					 		<div className="handle drag-handle"></div>
+							<div className="controls">
+								<button className="play-button" onClick={this.toggle.bind(this)}>Play/Pause</button>
+								<button onClick={this.remove.bind(this)}>Remove</button>
+							</div>
 							<YouTube
 								videoId={this.props.id}
 								className='iframe'
-								containerClassName='iframe-container'
+								containerClassName='video-frame'
 								opts={options}
 								onReady={this.onReady.bind(this)}
-								//onReady={func}                    // defaults -> noop
-								//onPlay={func}                     // defaults -> noop
-								//onPause={func}                    // defaults -> noop
-								//onEnd={func}                      // defaults -> noop
-								//onError={func}                    // defaults -> noop
-								//onStateChange={func}                    // defaults -> noop
-								//onPlaybackRateChange={func}       // defaults -> noop
-								//onPlaybackQualityChange={func}    // defaults -> noop
+								//onReady={func}					// defaults -> noop
+								//onPlay={func}						// defaults -> noop
+								//onPause={func}					// defaults -> noop
+								//onEnd={func}						 // defaults -> noop
+								//onError={func}					// defaults -> noop
+								//onStateChange={func}				// defaults -> noop
+								//onPlaybackRateChange={func}		// defaults -> noop
+								//onPlaybackQualityChange={func}	// defaults -> noop
 							/>
+							<div className='overlay'>
+								<p className='title'>{this.props.title}</p>
+								<p className='artist'>{this.props.artist}</p>
+							</div>
 						</div>
-						<div className='overlay'>
-							<p className='title'>{this.props.title}</p>
-							<p className='artist'>{this.props.artist}</p>
-						</div>
-					</div>
-	        	</div>
+					</ResizableBox>
+				</div>
 			</Draggable>
 		);
 	}
